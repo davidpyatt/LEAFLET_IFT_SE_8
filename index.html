@@ -1,0 +1,501 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <link rel="stylesheet" href="css/leaflet-search.css">
+        <link rel="stylesheet" href="css/leaflet-measure.css">
+        <style>
+        #map {
+            width: 1165px;
+            height: 822px;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/multi-style-layer.js"></script>
+        <script src="js/leaflet-svg-shape-markers.min.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="js/leaflet-measure.js"></script>
+        <script src="js/leaflet-search.js"></script>
+        <script src="data/UKCounties_Pseudo_Mercator_Categorised_V1_1.js"></script>
+        <script src="data/IFTDELIVERYPOINTS_v7_2.js"></script>
+        <script src="data/IFTDELIVERYPOINTSCOORDS_v6_3.js"></script>
+        <script>
+        var highlightLayer;
+        function highlightFeature(e) {
+            highlightLayer = e.target;
+            highlightLayer.openPopup();
+        }
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:12, minZoom:1
+        }).fitBounds([[50.68452102360719,-0.9154492799018759],[52.2887350390844,1.359795720098124]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="http://leafletjs.com" title="A JS library for interactive maps">Leaflet</a>');
+        var measureControl = new L.Control.Measure({
+            position: 'topleft',
+            primaryLengthUnit: 'meters',
+            secondaryLengthUnit: 'kilometers',
+            primaryAreaUnit: 'sqmeters',
+            secondaryAreaUnit: 'hectares'
+        });
+        measureControl.addTo(map);
+        document.getElementsByClassName('leaflet-control-measure-toggle')[0]
+        .innerHTML = '';
+        document.getElementsByClassName('leaflet-control-measure-toggle')[0]
+        .className += ' fas fa-ruler';
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+        }
+        var layer_OSMStandard_0 = L.tileLayer('http://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            opacity: 1.0,
+            attribution: '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap contributors, CC-BY-SA</a>',
+        });
+        layer_OSMStandard_0;
+        map.addLayer(layer_OSMStandard_0);
+        function pop_UKCounties_Pseudo_Mercator_Categorised_V1_1(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ID_1'] !== null ? Autolinker.link(String(feature.properties['ID_1'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NAME_1'] !== null ? Autolinker.link(String(feature.properties['NAME_1'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NAME_2'] !== null ? Autolinker.link(String(feature.properties['NAME_2'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['auxiliary_'] !== null ? Autolinker.link(String(feature.properties['auxiliary_'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['auxiliar_1'] !== null ? Autolinker.link(String(feature.properties['auxiliar_1'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_UKCounties_Pseudo_Mercator_Categorised_V1_1_0(feature) {
+            switch(String(feature.properties['NAME_2'])) {
+                case 'Berkshire':
+                    return {
+                pane: 'pane_UKCounties_Pseudo_Mercator_Categorised_V1_1',
+                opacity: 1,
+                color: 'rgba(0,0,0,0.53)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(213,163,114,0.53)',
+            }
+                    break;
+                case 'Buckinghamshire':
+                    return {
+                pane: 'pane_UKCounties_Pseudo_Mercator_Categorised_V1_1',
+                opacity: 1,
+                color: 'rgba(0,0,0,0.53)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(21,223,14,0.53)',
+            }
+                    break;
+                case 'Dorset':
+                    return {
+                pane: 'pane_UKCounties_Pseudo_Mercator_Categorised_V1_1',
+                opacity: 1,
+                color: 'rgba(0,0,0,0.53)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(18,180,224,0.53)',
+            }
+                    break;
+                case 'East Sussex':
+                    return {
+                pane: 'pane_UKCounties_Pseudo_Mercator_Categorised_V1_1',
+                opacity: 1,
+                color: 'rgba(0,0,0,0.53)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(133,140,240,0.53)',
+            }
+                    break;
+                case 'Hampshire':
+                    return {
+                pane: 'pane_UKCounties_Pseudo_Mercator_Categorised_V1_1',
+                opacity: 1,
+                color: 'rgba(0,0,0,0.53)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(75,115,202,0.53)',
+            }
+                    break;
+                case 'Hertfordshire':
+                    return {
+                pane: 'pane_UKCounties_Pseudo_Mercator_Categorised_V1_1',
+                opacity: 1,
+                color: 'rgba(0,0,0,0.53)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(164,132,232,0.53)',
+            }
+                    break;
+                case 'Isle of Wight':
+                    return {
+                pane: 'pane_UKCounties_Pseudo_Mercator_Categorised_V1_1',
+                opacity: 1,
+                color: 'rgba(0,0,0,0.53)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(16,92,223,0.53)',
+            }
+                    break;
+                case 'Kent':
+                    return {
+                pane: 'pane_UKCounties_Pseudo_Mercator_Categorised_V1_1',
+                opacity: 1,
+                color: 'rgba(0,0,0,0.53)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(62,200,149,0.53)',
+            }
+                    break;
+                case 'Oxfordshire':
+                    return {
+                pane: 'pane_UKCounties_Pseudo_Mercator_Categorised_V1_1',
+                opacity: 1,
+                color: 'rgba(0,0,0,0.53)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(220,19,223,0.53)',
+            }
+                    break;
+                case 'Surrey':
+                    return {
+                pane: 'pane_UKCounties_Pseudo_Mercator_Categorised_V1_1',
+                opacity: 1,
+                color: 'rgba(0,0,0,0.53)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(166,211,77,0.53)',
+            }
+                    break;
+                case 'West Sussex':
+                    return {
+                pane: 'pane_UKCounties_Pseudo_Mercator_Categorised_V1_1',
+                opacity: 1,
+                color: 'rgba(0,0,0,0.53)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(141,217,91,0.53)',
+            }
+                    break;
+                default:
+                    return {
+                pane: 'pane_UKCounties_Pseudo_Mercator_Categorised_V1_1',
+                opacity: 1,
+                color: 'rgba(0,0,0,0.53)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(167,22,234,0.53)',
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_UKCounties_Pseudo_Mercator_Categorised_V1_1');
+        map.getPane('pane_UKCounties_Pseudo_Mercator_Categorised_V1_1').style.zIndex = 401;
+        map.getPane('pane_UKCounties_Pseudo_Mercator_Categorised_V1_1').style['mix-blend-mode'] = 'normal';
+        var layer_UKCounties_Pseudo_Mercator_Categorised_V1_1 = new L.geoJson(json_UKCounties_Pseudo_Mercator_Categorised_V1_1, {
+            attribution: '',
+            pane: 'pane_UKCounties_Pseudo_Mercator_Categorised_V1_1',
+            onEachFeature: pop_UKCounties_Pseudo_Mercator_Categorised_V1_1,
+            style: style_UKCounties_Pseudo_Mercator_Categorised_V1_1_0,
+        });
+        bounds_group.addLayer(layer_UKCounties_Pseudo_Mercator_Categorised_V1_1);
+        map.addLayer(layer_UKCounties_Pseudo_Mercator_Categorised_V1_1);
+        function pop_IFTDELIVERYPOINTS_v7_2(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['City 1'] !== null ? Autolinker.link(String(feature.properties['City 1'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['LAT'] !== null ? Autolinker.link(String(feature.properties['LAT'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['LONG'] !== null ? Autolinker.link(String(feature.properties['LONG'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['field_4'] !== null ? Autolinker.link(String(feature.properties['field_4'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['field_5'] !== null ? Autolinker.link(String(feature.properties['field_5'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_IFTDELIVERYPOINTS_v7_2_0() {
+            return {
+                pane: 'pane_IFTDELIVERYPOINTS_v7_2',
+                radius: 7.2,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(242,5,20,1.0)',
+            }
+        }
+        map.createPane('pane_IFTDELIVERYPOINTS_v7_2');
+        map.getPane('pane_IFTDELIVERYPOINTS_v7_2').style.zIndex = 402;
+        map.getPane('pane_IFTDELIVERYPOINTS_v7_2').style['mix-blend-mode'] = 'normal';
+        var layer_IFTDELIVERYPOINTS_v7_2 = new L.geoJson(json_IFTDELIVERYPOINTS_v7_2, {
+            attribution: '',
+            pane: 'pane_IFTDELIVERYPOINTS_v7_2',
+            onEachFeature: pop_IFTDELIVERYPOINTS_v7_2,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_IFTDELIVERYPOINTS_v7_2_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_IFTDELIVERYPOINTS_v7_2);
+        map.addLayer(layer_IFTDELIVERYPOINTS_v7_2);
+        function pop_IFTDELIVERYPOINTSCOORDS_v6_3(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['City 2'] !== null ? Autolinker.link(String(feature.properties['City 2'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['LAT 1'] !== null ? Autolinker.link(String(feature.properties['LAT 1'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['LONG 1'] !== null ? Autolinker.link(String(feature.properties['LONG 1'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['City 2_1'] !== null ? Autolinker.link(String(feature.properties['City 2_1'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['LAT 1_1'] !== null ? Autolinker.link(String(feature.properties['LAT 1_1'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['LONG 1_1'] !== null ? Autolinker.link(String(feature.properties['LONG 1_1'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_IFTDELIVERYPOINTSCOORDS_v6_3_0() {
+            return {
+                pane: 'pane_IFTDELIVERYPOINTSCOORDS_v6_3',
+                radius: 9.9,
+                opacity: 1,
+                color: 'rgba(184,8,8,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(184,8,8,1.0)',
+            }
+        }
+        function style_IFTDELIVERYPOINTSCOORDS_v6_3_1() {
+            return {
+                pane: 'pane_IFTDELIVERYPOINTSCOORDS_v6_3',
+                radius: 10.8,
+                opacity: 1,
+                color: 'rgba(255,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,0,0,1.0)',
+            }
+        }
+        map.createPane('pane_IFTDELIVERYPOINTSCOORDS_v6_3');
+        map.getPane('pane_IFTDELIVERYPOINTSCOORDS_v6_3').style.zIndex = 403;
+        map.getPane('pane_IFTDELIVERYPOINTSCOORDS_v6_3').style['mix-blend-mode'] = 'normal';
+        var layer_IFTDELIVERYPOINTSCOORDS_v6_3 = new L.geoJson.multiStyle(json_IFTDELIVERYPOINTSCOORDS_v6_3, {
+            attribution: '',
+            pane: 'pane_IFTDELIVERYPOINTSCOORDS_v6_3',
+            onEachFeature: pop_IFTDELIVERYPOINTSCOORDS_v6_3,
+            pointToLayers: [function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.shapeMarker(latlng, style_IFTDELIVERYPOINTSCOORDS_v6_3_0(feature));
+            },function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.shapeMarker(latlng, style_IFTDELIVERYPOINTSCOORDS_v6_3_1(feature));
+            },
+        ]});
+        bounds_group.addLayer(layer_IFTDELIVERYPOINTSCOORDS_v6_3);
+        map.addLayer(layer_IFTDELIVERYPOINTSCOORDS_v6_3);
+        setBounds();
+        var i = 0;
+        layer_UKCounties_Pseudo_Mercator_Categorised_V1_1.eachLayer(function(layer) {
+            var context = {
+                feature: layer.feature,
+                variables: {}
+            };
+            layer.bindTooltip((layer.feature.properties['NAME_2'] !== null?String('<div style="color: #e31a1c; font-size: 9pt; font-family: \'MS Shell Dlg 2\', sans-serif;">' + layer.feature.properties['NAME_2']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_UKCounties_Pseudo_Mercator_Categorised_V1_1'});
+            labels.push(layer);
+            totalMarkers += 1;
+              layer.added = true;
+              addLabel(layer, i);
+              i++;
+        });
+        var i = 0;
+        layer_IFTDELIVERYPOINTS_v7_2.eachLayer(function(layer) {
+            var context = {
+                feature: layer.feature,
+                variables: {}
+            };
+            layer.bindTooltip((layer.feature.properties['City 1'] !== null?String('<div style="color: #000000; font-size: 10pt; font-family: \'MS Shell Dlg 2\', sans-serif;">' + layer.feature.properties['City 1']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_IFTDELIVERYPOINTS_v7_2'});
+            labels.push(layer);
+            totalMarkers += 1;
+              layer.added = true;
+              addLabel(layer, i);
+              i++;
+        });
+        var i = 0;
+        layer_IFTDELIVERYPOINTSCOORDS_v6_3.eachLayer(function(layer) {
+            var context = {
+                feature: layer.feature,
+                variables: {}
+            };
+            layer.bindTooltip((layer.feature.properties['City 2'] !== null?String('<div style="color: #000000; font-size: 10pt; font-family: \'MS Shell Dlg 2\', sans-serif;">' + layer.feature.properties['City 2']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_IFTDELIVERYPOINTSCOORDS_v6_3'});
+            labels.push(layer);
+            totalMarkers += 1;
+              layer.added = true;
+              addLabel(layer, i);
+              i++;
+        });
+        map.addControl(new L.Control.Search({
+            layer: layer_IFTDELIVERYPOINTS_v7_2,
+            initial: false,
+            hideMarkerOnCollapse: true,
+            propertyName: 'LONG'}));
+        document.getElementsByClassName('search-button')[0].className +=
+         ' fa fa-binoculars';
+        resetLabels([layer_UKCountiesPseudoMercatorCategorisedV1_1,layer_IFTDELIVERYPOINTSv7_2,layer_IFTDELIVERYPOINTSCOORDSv6_3]);
+        map.on("zoomend", function(){
+            resetLabels([layer_UKCountiesPseudoMercatorCategorisedV1_1,layer_IFTDELIVERYPOINTSv7_2,layer_IFTDELIVERYPOINTSCOORDSv6_3]);
+        });
+        map.on("layeradd", function(){
+            resetLabels([layer_UKCountiesPseudoMercatorCategorisedV1_1,layer_IFTDELIVERYPOINTSv7_2,layer_IFTDELIVERYPOINTSCOORDSv6_3]);
+        });
+        map.on("layerremove", function(){
+            resetLabels([layer_UKCountiesPseudoMercatorCategorisedV1_1,layer_IFTDELIVERYPOINTSv7_2,layer_IFTDELIVERYPOINTSCOORDSv6_3]);
+        });
+        </script>
+    </body>
+</html>
